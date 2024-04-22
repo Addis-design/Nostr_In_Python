@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nostr Chat Login</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/login.css') }}"
+    />
+    <script>
+      function selectPublicKey(publicKey) {
+        document.getElementById("public_key_input").value = publicKey;
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to Nostr Client</h1>
+      <p>Please select your Nostr public key to log in.</p>
+      <div id="key-container"></div>
+      <form action="/login" method="post">
+        <p id="public_key">{{ public_key }}</p>
+
+        <label for="public_key_input">Selected Public Key:</label>
+        <input type="text" id="public_key_input" name="public_key" required />
+        <button type="submit">Login</button>
+      </form>
+    </div>
+    <script src="{{url_for('static', filename='js/login.js')}}"></script>
+  </body>
+</html>

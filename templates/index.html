@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nostr Client</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          <h1>Nostr Client</h1>
+        </div>
+        <form id="logout-form" action="/logout" method="post">
+          <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
+      </nav>
+    </header>
+    <main>
+      <section id="contacts" class="card">
+        <h2>Contacts</h2>
+        <ul id="contact-list"></ul>
+      </section>
+      <section id="message-view" class="card">
+        <h2>Event Messages</h2>
+        <div id="message-container">
+          {% for message in event_msg_content %}
+          <div class="message" id="messages">{{ message }}</div>
+          {% endfor %}
+        </div>
+        <form id="message-form">
+          <div class="form-group">
+            <label for="recipient">Enter # Tag:</label>
+            <input
+              type="text"
+              id="recipient-input"
+              class="form-control"
+              placeholder="Enter recipient's name,  # Tagor identifier"
+            />
+          </div>
+          <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea
+              id="message"
+              rows="5"
+              class="form-control"
+              name="message"
+            ></textarea>
+          </div>
+          <div id="alert" class="alert"></div>
+
+          <button type="submit" class="btn btn-primary" id="send-button">
+            Send
+          </button>
+        </form>
+      </section>
+    </main>
+    <script src="{{url_for('static', filename='js/script.js')}}"></script>
+    <script>
+      async function getKeys() {
+        const { publicKey, privateKey } = await nostr.generateKeys();
+        // Send these keys (encrypted) to your server for further use
+        // (implementation omitted for security reasons)
+      }
+
+      getKeys();
+    </script>
+  </body>
+</html>
